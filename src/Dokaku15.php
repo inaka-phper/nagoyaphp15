@@ -19,21 +19,17 @@ class Dokaku15
             }
         }
 
-        $result = [];
+        $sides = [];
         foreach ($lines as $key => $line) {
-            if (array_key_exists($key + 1, $lines)) {
-                $result[] = $line - $lines[$key + 1];
-            } else {
-                $result[] = 8 - $lines[0] + $line;
-            }
+            $sides[] = array_key_exists($key + 1, $lines) ? $line - $lines[$key + 1] : 8 - $lines[0] + $line;
         }
 
-        $triangle = (array_map(function ($side) {
-            return $side === 4 ? $side + 1 : $side + 2;
-        }, $result));
+        $polygon = array_map(function ($side) {
+            return $side === 4 ? 5 : $side + 2;
+        }, $sides);
 
-        sort($triangle);
+        sort($polygon);
 
-        return join($triangle);
+        return implode('', $polygon);
     }
 }
